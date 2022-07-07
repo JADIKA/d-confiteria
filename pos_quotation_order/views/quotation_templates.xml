@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="pos_quotation_template" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            
+            <script type="text/javascript" src="/pos_quotation_order/static/src/js/models.js"/>
+            <script type="text/javascript" src="/pos_quotation_order/static/src/js/product_screen.js"/>
+            <script type="text/javascript" src="/pos_quotation_order/static/src/js/popup.js"/>
+            <!-- <script type="text/javascript" src="/pos_quotation_order/static/src/js/Printer.js" /> -->
+            <!-- <script type="text/javascript" src="/pos_quotation_order/static/src/js/ReceiptScreen.js" /> -->
+            <!-- <script type="text/javascript" src="/pos_quotation_order/static/src/js/ReceiptReservas.js" /> -->
+            <script type="text/javascript" src="/pos_quotation_order/static/src/js/ReservaReceipt.js" />
+            <script type="text/javascript" src="/pos_quotation_order/static/src/js/Buttons/QuotationButton.js" />
+            <script type="text/javascript" src="/pos_quotation_order/static/src/js/Buttons/ReservationsButton.js" />
+            <script type="text/javascript" src="/pos_quotation_order/static/src/js/Buttons/DispatchButton.js" />
+            <script type="text/javascript" src="/pos_quotation_order/static/src/js/Screens/QuotationScreen/QuotationScreen.js" />
+            <script type="text/javascript" src="/pos_quotation_order/static/src/js/Screens/QuotationScreen/ReservationReceiptScreen.js" />
+        </xpath>
+        <xpath expr="link[last()]" position="after">
+            <link rel="stylesheet" href="/pos_quotation_order/static/src/scss/QuotationScreen.scss" />
+            <link rel="stylesheet" href="/pos_quotation_order/static/src/css/pos_quotation.css" />
+        </xpath>
+    </template>
+</odoo>

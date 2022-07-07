@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="QuotationButton" owl="1">
+        <span class="control-button close-tbk">
+            <i class="fa fa-files-o"/>
+            <span>Reservar</span>
+        </span>
+    </t>
+
+    <!-- <t t-name="ReporteReservasButton" owl="1">
+        <div class='control-button'>
+            Reporte Reservas
+        </div>
+    </t>
+
+    <t t-name="ReporteDespachosButton" owl="1">
+        <div class='control-button'>
+            Reporte Despachos
+        </div>
+    </t> -->
+
+    <t t-name="QuotationsButton" owl="1">
+        <div class="ticket-button" t-att-class="{ highlight: props.isTicketScreenShown }" t-on-click="onClick">
+            <div class="with-badge" t-att-badge="count">
+                <i class="fa fa-ticket" aria-hidden="true"></i>
+            </div>
+            <div t-if="!env.isMobile">Reservas</div>
+        </div>
+    </t>
+
+    <t t-name="ReservationsButton" owl="1">
+        <div class="oe_status reservations">
+            <div t-attf-class="reservations" t-on-click="onClick">
+                <i t-attf-class="fa fa-calendar" />
+            </div>
+        </div>
+    </t>
+
+    <t t-name="DispatchButton" owl="1">
+        <div class="oe_status reservations">
+            <div t-attf-class="reservations" t-on-click="onClick">
+                <i t-attf-class="fa fa-truck" />
+            </div>
+        </div>
+    </t>
+
+    
+
+</templates>

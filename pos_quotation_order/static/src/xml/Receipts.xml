@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="XMLSaleDetailsReport">
+        <div class="pos-sale-ticket">
+            <div class="pos-center-align">
+                <t t-if='pos.company_logo_base64'>
+                    <img class="pos-logo" t-att-src='pos.company_logo_base64' />
+                    <br />
+                </t>
+                <t t-if='!pos.company_logo_base64'>
+                    <h1>
+                        <t t-esc='company.name' />
+                    </h1>
+                    <br />
+                </t>
+            </div>
+            <div class="pos-center-align">
+                Reporte de Reservas
+            </div>
+
+            <br />
+            <br />
+            <div>
+                <t t-foreach="quotations" t-as="q">
+
+                    <line>
+                        <left>------------------------------------------------</left>
+                    </line>
+                    <br />
+                    <div>
+                        Reserva:
+                        <t t-esc='q.quot_id' />
+                    </div>
+                    <br />
+                    <div>
+                        Hora:
+                        <t t-esc='q.quot_time' />
+                    </div>
+                    <t t-if="q.retiro == true">
+                        <div>Retiro</div>
+                    </t>
+                    <t t-if="q.entrega == true">
+                        <div>Despacho</div>
+                    </t>
+                    <div>
+                        Nota:
+                        <t t-esc='q.nota' />
+                    </div>
+                    <table class='receipt-orderlines'>
+                        <colgroup>
+                            <col width='10%' />
+                            <col width='90%' />
+                        </colgroup>
+                        <t t-foreach="q.lines" t-as="line">
+                            <tr>
+                                <td>
+                                    <t t-esc="line.qty" />
+                                </td>
+                                <td>
+                                    <t t-esc="line.name" />
+                                </td>
+                            </tr>
+                        </t>
+                    </table>
+
+                    <br />
+                    <line>
+                        <left>------------------------------------------------</left>
+                    </line>
+
+                    <br />
+                    <br />
+                </t>
+            </div>
+
+            <div font='b'>
+                <div>
+                    <t t-esc='date' />
+                </div>
+            </div>
+
+        </div>
+    </t>
+    <t t-name="ReservaReceipt" owl="1">
+        <div class="pos-receipt">
+            <div t-if="receipt.reservas">
+                Resumen de Reservas
+            </div>
+            <div t-if="receipt.dispatch">
+                Resumen de Despachos
+            </div>
+            <div t-if="receipt.date">
+                <t t-esc="receipt.date" />
+            </div>
+            <div class="orderlines" t-if="receipt.reservations" id="quot_lines">
+                <t t-foreach="receipt.reservations" t-as="reservation" t-key="reservation.id">
+                    <div 
+                    t-att-quot-name="reservation.id" 
+                    t-att-quot-id="reservation.reservation_id"
+                    t-att-time="reservation.time"
+                    t-att-nota="reservation.nota"
+                    class="quotation">
+                        <div class="orderlines">
+                            <div>=====================</div>
+                            <br/>
+                            <div>
+                                Reserva: <t t-esc='reservation.id' />
+                            </div>
+                            <br />
+                            <div>
+                                Hora: <t t-esc='reservation.time' />
+                            </div>
+                            <t t-if="reservation.retiro == true">
+                                <div>Retiro</div>
+                            </t>
+                            <t t-if="reservation.entrega == true">
+                                <div>Despacho</div>
+                            </t>
+                            <t t-if="reservation.artesanal == true">
+                                <div>Retira en Pueblito Artesanal</div>
+                            </t>
+                            <div>
+                                Nota:
+                                <t t-esc='reservation.nota' />
+                            </div>
+                            <br />
+                            <t t-foreach="reservation.lines" t-as="line" t-key="line.name">
+                                <div class="quot_line" t-att-qty="line.qty" t-att-name="line.name" t-att-details="line.details">
+                                    <t t-esc="line.qty" />
+                                    -
+                                    <t t-esc="line.name" />
+                                    
+                                </div>
+                            </t>
+
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ReservaReceiptById">
+        <div class="pos-receipt">
+            <div t-if="quotation.reservas">
+                Reserva <div t-esc="quotation.name" />
+            </div>
+            <div t-if="quotation.dispatch">
+                Despacho <div t-esc="quotation.name" />
+            </div>
+            <br />
+            <div>
+                Hora: <t t-esc='quotation.time' />
+            </div>
+            <t t-if="quotation.retiro == true">
+                <div>Retiro</div>
+            </t>
+            <t t-if="quotation.entrega == true">
+                <div>Despacho</div>
+            </t>
+            <t t-if="quotation.artesanal == true">
+                <div>Retira en Pueblito Artesanal</div>
+            </t>
+            <div>
+                Nota: <t t-esc='quotation.nota' />
+            </div>
+            <div class="orderlines" t-if="quotation.lines">
+                <div>=====================</div>
+
+                <br />
+                <t t-foreach="quotation.lines" t-as="q_line" t-key="q_line.name">
+                    <div>
+                        <t t-esc="q_line.qty" />
+                        -
+                        <t t-esc="q_line.name" />
+                        <div t-foreach="q_line.detail" t-as="detail" t-key="detail" t-esc="detail"/>
+
+                    </div>
+                </t>
+            </div>
+        </div>
+
+    </t>
+
+
+
+</templates>
