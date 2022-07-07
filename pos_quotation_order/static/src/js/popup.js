@@ -1,13 +1,23 @@
 odoo.define('pos_quotation_order.popup', function (require) {
     'use strict';
+
+    const {
+        useState,
+        useRef
+    } = owl.hooks;
+
     const AbstractAwaitablePopup = require('point_of_sale.AbstractAwaitablePopup');
     const Registries = require('point_of_sale.Registries');
+
     var rpc = require('web.rpc');
     var gui = require('point_of_sale.Gui');
 
     class QuotationPopup extends AbstractAwaitablePopup {
         constructor() {
             super(...arguments);
+            this.state = useState({
+                customer: this.props.customer,
+            });
             this.message = null;
         }
 
@@ -39,13 +49,6 @@ odoo.define('pos_quotation_order.popup', function (require) {
             }
             else {
                 var retiro = false
-            };
-            var artesanal = $('#artesanal').prop('checked');
-            if (artesanal == true) {
-                var artesanal = true
-            }
-            else {
-                var artesanal = false
             };
             var entrega = $('#entrega').prop('checked');
             if (entrega == true) {
@@ -101,7 +104,6 @@ odoo.define('pos_quotation_order.popup', function (require) {
                 order_to_save.retiro = retiro;
                 order_to_save.entrega = entrega;
                 order_to_save.recibe = recibe;
-                order_to_save.artesanal = artesanal;
                 order_to_save.dir_entrega = dir_entrega;
                 order_to_save.tel_entrega = tel_entrega;
                 order_to_save.note = order_note;
@@ -114,42 +116,28 @@ odoo.define('pos_quotation_order.popup', function (require) {
                     .then(function (order) {
                         //self.env.pos.quotations.push(order);
                         self.env.pos.delete_current_order();
-                        self.showPopup('QuotationResultPopUp', {
-                        });
-                        // gui.close_popup();
-                        // self.env.pos.delete_current_order();
-                        // gui.show_popup('QuotationResultPopUp', {
-                        //     'body': _t('Reserva : ') + order['name'],
-                        // });
+                        this.showPopup('QuotationPopUpAlert', {
+                            title: this.env._t('Success'),
+                            body: this.env._t(quotation_number + ' Created Successfully'),
+                        })
                     });
             }
+        }
+        _cancelAtEscape(event) {
+            super._cancelAtEscape(event);
+            if (event.key === 'Enter') {
+                this.confirm();
+            }
+
         }
     }
     QuotationPopup.template = 'QuotationPopup';
     QuotationPopup.defaultProps = {
-        confirmText: 'Aceptar',
+        confirmText: 'Crear',
+        cancelText:'Cancelar',
         title: 'Reserva',
         body: '',
         message: ''
     };
     Registries.Component.add(QuotationPopup);
-
-    class QuotationResultPopUp extends AbstractAwaitablePopup {
-        constructor() {
-            super(...arguments);
-            this.message = null;
-        }
-
-
-    }
-    QuotationResultPopUp.template = 'QuotationResultPopUp';
-    QuotationResultPopUp.defaultProps = {
-        confirmText: 'Aceptar',
-        title: 'Reserva',
-        body: '',
-        message: ''
-    };
-    Registries.Component.add(QuotationResultPopUp);
-
-    return QuotationPopup, QuotationResultPopUp;
 })

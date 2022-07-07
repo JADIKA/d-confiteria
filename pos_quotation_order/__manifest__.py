@@ -20,6 +20,7 @@
         'static/src/xml/Popups.xml',
         'static/src/xml/Receipts.xml',
         'static/src/xml/Screens.xml',
+        'static/src/xml/AlertPopups.xml',
         ],
     'images': ['static/description/banner.jpg'],
     'license': 'AGPL-3',

@@ -116,9 +116,6 @@
                             <t t-if="reservation.entrega == true">
                                 <div>Despacho</div>
                             </t>
-                            <t t-if="reservation.artesanal == true">
-                                <div>Retira en Pueblito Artesanal</div>
-                            </t>
                             <div>
                                 Nota:
                                 <t t-esc='reservation.nota' />
@@ -157,9 +154,6 @@
             </t>
             <t t-if="quotation.entrega == true">
                 <div>Despacho</div>
-            </t>
-            <t t-if="quotation.artesanal == true">
-                <div>Retira en Pueblito Artesanal</div>
             </t>
             <div>
                 Nota: <t t-esc='quotation.nota' />

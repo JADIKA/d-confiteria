@@ -102,8 +102,7 @@ odoo.define('pos_quotation_order.ReceiptScreen', function (require) {
                                 time: $(element).attr('time'),
                                 nota: $(element).attr('nota'),
                                 retiro: $(element).attr('retiro'),
-                                entrega: $(element).attr('entrega'),
-                                artesanal: $(element).attr('artesanal')
+                                entrega: $(element).attr('entrega')
 
                             }
                             var receipt = QWeb.render('ReservaReceiptById', { quotation: quotation });

@@ -1,10 +1,37 @@
-.alert_msg{
-    color:red;
+.flex-justify-content {
+    display: flex;
 }
 
-.popup_quot_ref{
-    height: 150px !important;
+.quote-id-value {
+    margin-left: 14px;
+    margin-right: 14px;
+    color: #875a7b;
 }
+.order_date{
+    min-width: 220px;
+}
+.order_time{
+    min-width: 160px;
+}
+
+.quote-id {
+    margin: 15px 9px;
+    min-width: 25%;
+}
+
+.flex-justify-content textarea {
+    resize: none;
+}
+
+.note-save-quotation {
+    margin: 15px 9px;
+    padding: 9px;
+}
+
+.div{
+    text-align: left;
+}
+
 
 
 /* The Quotation List Screen */

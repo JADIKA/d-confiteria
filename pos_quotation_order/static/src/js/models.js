@@ -12,7 +12,7 @@ odoo.define('pos_quotation_order.models', function (require) {
 
     models.load_models({
         model: 'pos.quotation',
-        fields: ['name', 'partner_id', 'date_order', 'amount_total', 'lines', 'state', 'time_order', 'retiro', 'entrega', 'dir_entrega', 'tel_entrega', 'ean13', 'recibe', 'artesanal', 'printed', 'printed_disp'],
+        fields: ['name', 'partner_id', 'date_order', 'amount_total', 'lines', 'state', 'time_order', 'retiro', 'entrega', 'dir_entrega', 'tel_entrega', 'ean13', 'recibe', 'printed', 'printed_disp'],
         domain: [['state', '=', 'draft']],
         loaded: function (self, quotations) {
 

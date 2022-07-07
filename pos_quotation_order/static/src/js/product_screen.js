@@ -5,20 +5,71 @@ odoo.define('pos_quotation_order.product_screen', function (require) {
     const ProductScreen = require('point_of_sale.ProductScreen');
     const { useListener } = require('web.custom_hooks');
     const Registries = require('point_of_sale.Registries');
-    var rpc = require('web.rpc');
-    var core = require('web.core');
-    var gui = require('point_of_sale.Gui');
-    var QWeb = core.qweb;
 
     class QuotationButton extends PosComponent {
         constructor() {
             super(...arguments);
             useListener('click', this.onClick);
         }
-        async onClick() {
-            this.showPopup('QuotationPopup', {
+        get client() {
+            return this.env.pos.get_client();
+        }
 
+        get currentOrder() {
+            return this.env.pos.get_order();
+        }
+
+        async onClick() {
+            var self = this;
+            const {
+                confirmed,
+                payload,
+                print
+            } = await this.showPopup('QuotationPopup', {
+                customer: self.client,
             });
+            if (confirmed) {
+                if (!this.currentOrder.export_as_JSON().lines.length) {
+                    this.showPopup('QuotationPopUpAlert', {
+                        title: this.env._t('Warning'),
+                        body: this.env._t('At least one product is required to create the quotation'),
+                    })
+                    return;
+                }
+                if (print) {
+                    self.showScreen("ReceiptScreen");
+                }
+                const val = this.formatCurrentOrder(payload, quotation_number);
+                try {
+                    this.rpc({
+                        model: 'pos.quotation',
+                        method: 'create_quotation',
+                        args: [val],
+                        kwargs: {
+                            context: this.env.session.user_context
+                        },
+                    }).then((result) => {
+                        if (result) {
+                            self.env.pos.quotation_number = result[1];
+                            let counter = self.currentOrder.orderlines.length
+                            for (let i = 0; i < counter; i++) {
+                                self.currentOrder.remove_orderline(self.currentOrder.orderlines.models[0])
+                            }
+                            self.env.pos.db.add_quotations(result[0]);
+                        }
+                    });
+                } catch (error) {
+                    this.showPopup('QuotationPopUpAlert', {
+                        title: this.env._t('Error'),
+                        body: this.env._t("Could not reach the server. Please check that you have an active internet connection, the server address you entered is valid, and the server is online."),
+                    })
+                    return;
+                }
+                this.showPopup('QuotationPopUpAlert', {
+                    title: this.env._t('Success'),
+                    body: this.env._t(quotation_number + ' Created Successfully'),
+                })
+            }
         }
     }
     QuotationButton.template = 'QuotationButton';
@@ -30,70 +81,6 @@ odoo.define('pos_quotation_order.product_screen', function (require) {
         position: ['before', 'SetPricelistButton'],
     });
     Registries.Component.add(QuotationButton);
-
-    // class ReporteReservasButton extends PosComponent {
-    //     constructor() {
-    //         super(...arguments);
-    //         useListener('click', this.onClick);
-    //     }
-    //     async onClick() {
-    //         this.get_reservations('web');
-    //         // if (!this.env.pos.config.iface_print_via_proxy) {
-                
-    //         // } else {
-    //         //     this.print_xml();
-    //         // }
-    //     }
-
-    //     get_reservations(print_type) {
-    //         var self = this;
-    //         rpc.query({
-    //             model: 'report.point_of_sale.report_reservations',
-    //             method: 'get_pos_quot_details',
-    //             args: [self.env.pos.config.id],
-    //         }).then(function (result) {
-    //             var env = {
-    //                 quotations: result,
-    //                 date: (new Date()).toLocaleString(),
-    //             };
-    //             // console.log(result);
-    //             if (print_type == 'posbox') {
-    //                 for (let i = 0; i < result.length; i++) {
-    //                     var env_ind = {
-    //                         q: result[i],
-    //                         date: (new Date()).toLocaleString(),
-    //                     }
-    //                     var report = QWeb.render('ResumenReservasInd', env_ind);
-    //                     self.pos.proxy.print_receipt(report);
-    //                 }
-
-    //             } else {
-    //                 self.showScreen('ReceiptScreen', {
-    //                     reservas: true,
-    //                     reservations: result.length > 0 ? result : false,
-    //                     date: (new Date()).toLocaleString(),
-    //                 });
-    //             }
-                
-
-    //         });
-    //     }
-    //     print_xml() {
-    //         this.get_reservations('posbox');
-            
-    //     }
-    // }
-    // ReporteReservasButton.template = 'ReporteReservasButton';
-    // ProductScreen.addControlButton({
-    //     component: ReporteReservasButton,
-    //     condition: function () {
-    //         return true;
-    //     },
-    //     position: ['before', 'SetPricelistButton'],
-    // });
-    // Registries.Component.add(ReporteReservasButton);
-
-    
 
     return QuotationButton;
 });

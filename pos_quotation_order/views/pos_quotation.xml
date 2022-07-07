@@ -61,7 +61,6 @@
                         <field name="ean13" string="Barcode" attrs="{'readonly':True}"/>
                         <field name="retiro"/>
                         <field name="entrega"/>
-                        <field name="artesanal"/>
                         <field name="recibe"/>
                         <field name="dir_entrega"/>
                         <field name="tel_entrega"/>

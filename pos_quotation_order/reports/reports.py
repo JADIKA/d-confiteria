@@ -40,7 +40,6 @@ class ReportSaleDetails(models.AbstractModel):
                        'retiro': quot.retiro,
                        'entrega': quot.entrega,
                        'nota': quot.note,
-                       'artesanal': quot.artesanal,
                        'reservation_id': quot.id
                        }
                 res['lines'] = quot_lines
