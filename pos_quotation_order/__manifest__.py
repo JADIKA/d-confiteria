@@ -7,7 +7,7 @@
     'company': "Pudutechnology",
     'website': "http://www.pudutechnology.cl",
     'category': 'Pudutechnology',
-    'depends': ['point_of_sale','sale','website_sale'],
+    'depends': ['point_of_sale'],
     'data': [
         'security/ir.model.access.csv',
         'views/quotation_templates.xml',
@@ -20,7 +20,6 @@
         'static/src/xml/Popups.xml',
         'static/src/xml/Receipts.xml',
         'static/src/xml/Screens.xml',
-        'static/src/xml/AlertPopups.xml',
         ],
     'images': ['static/description/banner.jpg'],
     'license': 'AGPL-3',

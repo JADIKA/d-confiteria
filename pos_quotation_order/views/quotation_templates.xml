@@ -6,7 +6,6 @@
             <script type="text/javascript" src="/pos_quotation_order/static/src/js/models.js"/>
             <script type="text/javascript" src="/pos_quotation_order/static/src/js/product_screen.js"/>
             <script type="text/javascript" src="/pos_quotation_order/static/src/js/popup.js"/>
-            <script type="text/javascript" src="/pos_quotation_order/static/src/js/AlertPopups.js"/>
             <!-- <script type="text/javascript" src="/pos_quotation_order/static/src/js/Printer.js" /> -->
             <!-- <script type="text/javascript" src="/pos_quotation_order/static/src/js/ReceiptScreen.js" /> -->
             <!-- <script type="text/javascript" src="/pos_quotation_order/static/src/js/ReceiptReservas.js" /> -->

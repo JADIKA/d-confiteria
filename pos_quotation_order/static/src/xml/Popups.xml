@@ -1,72 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-    <t t-name="QuotationPopup" owl="1">
-        <div class="modal-dialog modal-lg">
-            <div class="popup">
-                <header class="title">
-                    <t t-esc=" props.title || 'Orden a Reserva' " />
-                </header>
-                <div class="div">
-                    
-                    <div class="flex-justify-content">
-                        <div class="quote-id">Customer:</div>
-                        <div class="quote-id-value"><t t-esc="props.customer ? props.customer.name : 'Not Selected'"/></div>
-                    </div>
-                    <div class="flex-justify-content">
-                        <div class="quote-id">Fecha:</div>
-                        <div class="quote-id-value">
-                            <input id="date" type="date" name="order_date" class="order_date"  placeholder="Fecha(Año/Mes/Día)"/>
-                        </div>
-                    </div>
-                    <div class="flex-justify-content">
-                        <div class="quote-id">Hora:</div>
-                        <div class="quote-id-value">
-                            <input id="time" type="time" class="order_time" name="order_time"  placeholder="Hora"/>
-                        </div>
-                    </div>
-
-                    <div class="flex-justify-content">
-                        <div class="quote-id">Retiro:</div>
-                        <div class="quote-id-value"><input id="retiro" type="checkbox" name="retiro" value="true"/></div>
-                        <div class="quote-id">Entrega:</div>
-                        <div class="quote-id-value"><input id="entrega" type="checkbox" name="entrega" value="true"/></div>
-                    </div>
-                    <div class="flex-justify-content">
-                        <div class="quote-id">Recibe:</div>
-                        <div class="quote-id-value"><input id="recibe" type="text" name="recibe"/></div>
-                    </div>
-                    <div class="flex-justify-content">
-                        <div class="quote-id">Dir. Entrega:</div>
-                        <div class="quote-id-value"><input id="dir_entrega" type="text" name="dir_entrega"/></div>
-                    </div>
-                    <div class="flex-justify-content">
-                        <div class="quote-id">Tel. Entrega:</div>
-                        <div class="quote-id-value"><input id="tel_entrega" type="tel" name="tel_entrega"/></div>
-                    </div>
-                    <div class="flex-justify-content">
-                        <div class="note-save-quotation">Note:</div>
-                        <div>
-                             <textarea id="text_area" name="order_note" t-ref="textarea" rows="3" cols="30"/>
-                        </div>
-                    </div>
-                </div>
+<t t-name="QuotationResultPopUp" owl="1">
+        <div class="modal-dialog">
+            <div class="popup popup_quot_ref">
+                <p class="body"><t t-esc="props.body || '' "/></p>
                 <div class="footer">
-                    <div>
-                        <div class="button confirm" t-on-click="confirm">
-                            <t t-esc="props.confirmText"/>
-                        </div>
-                        <div>
-                            <div class="button confirm" t-on-click="confirmPrint">Save &amp; Print</div>
-                        </div>
-                        <div class="button cancel" t-on-click="cancel">
-                            <t t-esc="props.cancelText"/>
-                        </div>
-                        
+                    <div class="button cancel" t-on-click="confirm">
+                        OK
                     </div>
-                    
                 </div>
             </div>
         </div>
+    </t>
+<t t-name="QuotationPopup" owl="1">
+    <div class="modal-dialog modal-lg">
+        <div class="popup">
+            <header class="title">
+                <t t-esc=" props.title || 'Orden a Reserva' " />
+            </header>
+            <div class="div">
+                
+                <div class="flex-justify-content">
+                    <div class="quote-id">Cliente:</div>
+                    <div class="quote-id-value"><t t-esc="props.customer ? props.customer.name : 'Not Selected'"/></div>
+                </div>
+                <div class="flex-justify-content">
+                    <div class="quote-id">Fecha:</div>
+                    <div class="quote-id-value">
+                        <input id="date" type="date" name="order_date" class="order_date"  placeholder="Fecha(Año/Mes/Día)"/>
+                    </div>
+                </div>
+                <div class="flex-justify-content">
+                    <div class="quote-id">Hora:</div>
+                    <div class="quote-id-value">
+                        <input id="time" type="time" class="order_time" name="order_time"  placeholder="Hora"/>
+                    </div>
+                </div>
+
+                <div class="flex-justify-content">
+                    <div class="quote-id">Retiro:</div>
+                    <div class="quote-id-value"><input id="retiro" type="checkbox" name="retiro" value="true"/></div>
+                    <div class="quote-id">Entrega:</div>
+                    <div class="quote-id-value"><input id="entrega" type="checkbox" name="entrega" value="true"/></div>
+                </div>
+                <div class="flex-justify-content">
+                    <div class="quote-id">Recibe:</div>
+                    <div class="quote-id-value"><input id="recibe" type="text" name="recibe"/></div>
+                </div>
+                <div class="flex-justify-content">
+                    <div class="quote-id">Dir. Entrega:</div>
+                    <div class="quote-id-value"><input id="dir_entrega" type="text" name="dir_entrega"/></div>
+                </div>
+                <div class="flex-justify-content">
+                    <div class="quote-id">Tel. Entrega:</div>
+                    <div class="quote-id-value"><input id="tel_entrega" type="tel" name="tel_entrega"/></div>
+                </div>
+                <div class="flex-justify-content">
+                    <div class="note-save-quotation">Note:</div>
+                    <div>
+                         <textarea id="order_note" name="order_note" t-ref="textarea" class="form-control order_note" rows="3" cols="30"/>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div>
+                    <div class="button confirm" t-on-click="confirm_quotation()">
+                        <t t-esc="props.confirmText"/>
+                    </div>
+                    <div class="button cancel" t-on-click="cancel">
+                        <t t-esc="props.cancelText"/>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
     </t>
 
 </templates>

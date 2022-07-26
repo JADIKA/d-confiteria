@@ -49,7 +49,7 @@
                     <label for="retiro">Retiro</label>
                     <input id="retiro" type="checkbox" name="retiro" value="true"/>
                     <label for="entrega">Entrega</label>
-                    <input id="entrega" type="checkbox" name="entrega" value="true"/>
+                    <input id="entrega" type="checkbox" name="entrega" value="true"/>>
                     <br/>
                     <label for="recibe">Recibe</label>
                     <input id="recibe" type="text" name="recibe" style="
@@ -125,6 +125,19 @@
 
     background: rgba(0,0,0,0.05);">
                         Cerrar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="QuotationResultPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup_quot_ref">
+                <p class="body"><t t-esc="widget.options.body || '' "/></p>
+                <div class="footer">
+                    <div class="button cancel">
+                        OK
                     </div>
                 </div>
             </div>

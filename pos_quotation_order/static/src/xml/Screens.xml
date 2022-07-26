@@ -86,7 +86,6 @@
                                 <div class="header-row" t-att-class="{ oe_hidden: env.isMobile }">
                                     <div class="col wide">Fecha</div>
                                     <div class="col wide">Hora</div>
-                                    <div class="col narrow">Cód. Barras</div>
                                     <div class="col wide">Reserva</div>
                                     <div class="col">Customer</div>
                                     <div class="col end">Total</div>
@@ -105,12 +104,6 @@
                                             <div t-if="env.isMobile">Hora</div>
                                             <div>
                                                 <t t-esc="getTime(order)"></t>
-                                            </div>
-                                        </div>
-                                        <div class="col wide">
-                                            <div t-if="env.isMobile">Cod. Barras</div>
-                                            <div>
-                                                <t t-esc="getEan(order)"></t>
                                             </div>
                                         </div>
                                         <div class="col wide">

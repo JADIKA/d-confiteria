@@ -1,16 +1,12 @@
 odoo.define('pos_quotation_order.popup', function (require) {
     'use strict';
-
-    const {
-        useState,
-        useRef
-    } = owl.hooks;
-
     const AbstractAwaitablePopup = require('point_of_sale.AbstractAwaitablePopup');
     const Registries = require('point_of_sale.Registries');
-
     var rpc = require('web.rpc');
     var gui = require('point_of_sale.Gui');
+    const {
+        useState,
+    } = owl.hooks;
 
     class QuotationPopup extends AbstractAwaitablePopup {
         constructor() {
@@ -114,30 +110,47 @@ odoo.define('pos_quotation_order.popup', function (require) {
                     args: [order_to_save],
                 })
                     .then(function (order) {
-                        //self.env.pos.quotations.push(order);
+                       // self.env.pos.quotations.push(order);
                         self.env.pos.delete_current_order();
-                        this.showPopup('QuotationPopUpAlert', {
-                            title: this.env._t('Success'),
-                            body: this.env._t(quotation_number + ' Created Successfully'),
-                        })
+                        self.showPopup('QuotationResultPopUp', {
+                            title: self.env._t('Success'),
+                            body: self.env._t(order['name'] + ' Creada Satisfactoriamente'),
+                        });
+                        // gui.close_popup();
+                        // self.env.pos.delete_current_order();
+                        // gui.show_popup('QuotationResultPopUp', {
+                        //     'body': _t('Reserva : ') + order['name'],
+                        // });
                     });
             }
-        }
-        _cancelAtEscape(event) {
-            super._cancelAtEscape(event);
-            if (event.key === 'Enter') {
-                this.confirm();
-            }
-
         }
     }
     QuotationPopup.template = 'QuotationPopup';
     QuotationPopup.defaultProps = {
-        confirmText: 'Crear',
-        cancelText:'Cancelar',
+        confirmText: 'Aceptar',
+        cancelText: 'Cancelar',
         title: 'Reserva',
         body: '',
         message: ''
     };
     Registries.Component.add(QuotationPopup);
+
+    class QuotationResultPopUp extends AbstractAwaitablePopup {
+        constructor() {
+            super(...arguments);
+            this.message = null;
+        }
+
+
+    }
+    QuotationResultPopUp.template = 'QuotationResultPopUp';
+    QuotationResultPopUp.defaultProps = {
+        confirmText: 'Aceptar',
+        title: 'Reserva',
+        body: '',
+        message: ''
+    };
+    Registries.Component.add(QuotationResultPopUp);
+
+    return QuotationPopup, QuotationResultPopUp;
 })
